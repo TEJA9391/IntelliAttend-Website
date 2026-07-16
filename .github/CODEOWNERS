@@ -1,0 +1,18 @@
+# CODEOWNERS - IntelliAttend
+# Each line is a file pattern followed by one or more owners.
+# These owners will be automatically requested for review when a PR modifies matching files.
+
+# Default owner for everything
+* @TEJA9391
+
+# Protected directories - only repo owner can approve
+/lib/Core/ @TEJA9391
+/lib/Data/ @TEJA9391
+/lib/Services/ @TEJA9391
+/lib/engine/ @TEJA9391
+/lib/main.dart @TEJA9391
+
+# Cosmetic directories - repo owner reviews
+/lib/presentation/ @TEJA9391
+/lib/Theme/ @TEJA9391
+/assets/ @TEJA9391
