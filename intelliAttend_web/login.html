@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>IntelliAttend - Sign In</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#1a211f",
+                        "primary-fixed": "#71f8e4",
+                        "on-tertiary-fixed": "#131b2e",
+                        "surface-container-lowest": "#090f0e",
+                        "on-primary-fixed-variant": "#005048",
+                        "tertiary": "#bec6e0",
+                        "surface-bright": "#343b39",
+                        "error-container": "#93000a",
+                        "on-secondary-container": "#003111",
+                        "inverse-on-surface": "#2b3230",
+                        "surface-variant": "#2f3634",
+                        "on-tertiary-fixed-variant": "#3f465c",
+                        "secondary-container": "#1ca64d",
+                        "on-tertiary-container": "#323a4f",
+                        "surface-container-highest": "#2f3634",
+                        "on-surface-variant": "#bbcac6",
+                        "on-secondary-fixed-variant": "#005320",
+                        "secondary-fixed-dim": "#62df7d",
+                        "primary-container": "#14b8a6",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#dae2fd",
+                        "primary": "#4fdbc8",
+                        "on-primary": "#003731",
+                        "error": "#ffb4ab",
+                        "surface-tint": "#4fdbc8",
+                        "surface-container-high": "#252b2a",
+                        "secondary": "#62df7d",
+                        "on-tertiary": "#283044",
+                        "on-secondary": "#003914",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#bec6e0",
+                        "primary-fixed-dim": "#4fdbc8",
+                        "on-surface": "#dde4e1",
+                        "inverse-surface": "#dde4e1",
+                        "secondary-fixed": "#7ffc97",
+                        "inverse-primary": "#006b5f",
+                        "surface-dim": "#0e1513",
+                        "on-primary-fixed": "#00201c",
+                        "background": "#000000",
+                        "outline-variant": "#3c4947",
+                        "outline": "#859490",
+                        "on-primary-container": "#00423b",
+                        "on-background": "#dde4e1",
+                        "tertiary-container": "#9ca4bd",
+                        "surface-container-low": "#161d1b",
+                        "surface": "#121212",
+                        "on-secondary-fixed": "#002109"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "display": ["Inter", "sans-serif"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-lg": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: max(700px, 100dvh);
+        }
+        .field input {
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 0;
+            color: #dde4e1;
+            font-size: 16px;
+            line-height: 1.5;
+            width: 100%;
+        }
+        .field input::placeholder {
+            color: #859490;
+        }
+        .field input:focus {
+            --tw-ring-shadow: 0 0 #0000;
+        }
+    </style></head>
+<body class="bg-black font-display text-on-surface antialiased selection:bg-primary selection:text-on-primary">
+<div class="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden p-6">
+<!-- Subtle background decoration -->
+<div class="absolute -right-32 -top-32 size-72 rounded-full bg-primary/10 blur-3xl"></div>
+<div class="absolute -left-32 -bottom-32 size-72 rounded-full bg-secondary/10 blur-3xl"></div>
+
+<div class="w-full max-w-sm flex flex-col items-center">
+<!-- Logo -->
+<div class="flex size-24 items-center justify-center rounded-[2rem] bg-gradient-to-br from-primary to-secondary shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-white" style="font-size: 48px; font-variation-settings: 'FILL' 1;">school</span>
+</div>
+
+<div class="mt-8 text-center">
+<h1 class="text-4xl font-bold tracking-[-0.02em] text-white">IntelliAttend</h1>
+<p class="mt-2 text-base text-on-surface-variant">Smart. Secure. Seamless Faculty Portal.</p>
+</div>
+
+<!-- Error Banner -->
+<div id="errorBanner" class="hidden w-full mt-8 rounded-2xl border border-error/20 bg-error-container/50 p-4">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-error" style="font-size: 22px;">error_outline</span>
+<p id="errorText" class="flex-1 text-sm text-on-error-container leading-relaxed"></p>
+</div>
+</div>
+
+<form id="loginForm" class="w-full mt-8 space-y-4" novalidate>
+<label class="block">
+<span class="mb-1.5 block text-sm font-medium text-on-surface-variant">Faculty ID / Email</span>
+<div class="field flex items-center gap-3 rounded-xl border border-outline-variant bg-surface-container px-4 py-3.5 transition-colors focus-within:border-primary">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-size: 22px;">alternate_email</span>
+<input id="emailInput" type="email" autocomplete="username" placeholder="user@mrcet.ac.in" required>
+</div>
+</label>
+
+<label class="block">
+<span class="mb-1.5 block text-sm font-medium text-on-surface-variant">Password</span>
+<div class="field flex items-center gap-3 rounded-xl border border-outline-variant bg-surface-container px-4 py-3.5 transition-colors focus-within:border-primary">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-size: 22px;">lock</span>
+<input id="passwordInput" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+<button id="togglePassword" type="button" class="shrink-0 text-on-surface-variant hover:text-on-surface transition-colors" aria-label="Show password">
+<span class="material-symbols-outlined" style="font-size: 22px;">visibility</span>
+</button>
+</div>
+</label>
+
+<div class="flex justify-end">
+<button type="button" id="forgotBtn" class="text-sm font-semibold text-primary hover:text-primary-fixed transition-colors">Forgot Password?</button>
+</div>
+
+<button type="submit" id="signInBtn" class="mt-6 flex h-16 w-full items-center justify-center rounded-2xl bg-primary-container text-base font-bold tracking-[0.02em] text-white shadow-lg shadow-primary/10 transition-all duration-300 hover:brightness-110 active:scale-[0.98] disabled:opacity-60 disabled:pointer-events-none">
+<span id="signInLabel">SIGN IN</span>
+<span id="signInSpinner" class="hidden size-6 border-[3px] border-white/40 border-t-white rounded-full animate-spin"></span>
+</button>
+</form>
+
+<p class="mt-12 text-[11px] font-medium tracking-[0.15em] text-outline/70">v1.0.0 • SECURE FACULTY SYSTEM</p>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="pointer-events-none fixed bottom-8 left-1/2 z-50 -translate-x-1/2 translate-y-4 rounded-lg bg-secondary-container px-4 py-2.5 text-sm font-medium text-on-secondary-container opacity-0 shadow-xl transition-all duration-300"></div>
+</div>
+
+<script>
+        (function () {
+            "use strict";
+
+            var emailInput = document.getElementById("emailInput");
+            var passwordInput = document.getElementById("passwordInput");
+            var form = document.getElementById("loginForm");
+            var errorBanner = document.getElementById("errorBanner");
+            var errorText = document.getElementById("errorText");
+            var signInBtn = document.getElementById("signInBtn");
+            var signInLabel = document.getElementById("signInLabel");
+            var signInSpinner = document.getElementById("signInSpinner");
+            var togglePassword = document.getElementById("togglePassword");
+            var forgotBtn = document.getElementById("forgotBtn");
+            var toast = document.getElementById("toast");
+
+            var email = localStorage.getItem("last_login_email");
+            if (email) {
+                emailInput.value = email;
+                passwordInput.focus();
+            }
+
+            var icon = togglePassword.querySelector(".material-symbols-outlined");
+
+            togglePassword.addEventListener("click", function () {
+                var show = passwordInput.type === "password";
+                passwordInput.type = show ? "text" : "password";
+                icon.textContent = show ? "visibility_off" : "visibility";
+            });
+
+            function showError(message) {
+                errorText.textContent = message;
+                errorBanner.classList.remove("hidden");
+            }
+
+            function clearError() {
+                errorBanner.classList.add("hidden");
+            }
+
+            function showToast(message) {
+                toast.textContent = message;
+                toast.classList.remove("opacity-0", "translate-y-4");
+                clearTimeout(showToast._t);
+                showToast._t = setTimeout(function () {
+                    toast.classList.add("opacity-0", "translate-y-4");
+                }, 2800);
+            }
+
+            function validate() {
+                var value = emailInput.value.trim().toLowerCase();
+                if (!value) return "Faculty ID / Email is required.";
+                if (!value.endsWith("@mrcet.ac.in"))
+                    return "Please enter your full university email (e.g. fac01@mrcet.ac.in).";
+                if (!passwordInput.value) return "Email and password are required.";
+                return null;
+            }
+
+            function setLoading(loading) {
+                signInBtn.disabled = loading;
+                signInSpinner.classList.toggle("hidden", !loading);
+                signInLabel.classList.toggle("hidden", loading);
+            }
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                clearError();
+
+                var error = validate();
+                if (error) {
+                    showError(error);
+                    return;
+                }
+
+                setLoading(true);
+
+                setTimeout(function () {
+                    localStorage.setItem("last_login_email", emailInput.value.trim().toLowerCase());
+                    window.location.href = "home.html";
+                }, 900);
+            });
+
+            emailInput.addEventListener("input", clearError);
+            passwordInput.addEventListener("input", clearError);
+
+            forgotBtn.addEventListener("click", function () {
+                var value = emailInput.value.trim().toLowerCase();
+                if (!value) {
+                    showError("Enter your email first, then tap Forgot Password.");
+                    return;
+                }
+                if (!value.endsWith("@mrcet.ac.in")) {
+                    showError("Enter your full university email (e.g. fac01@mrcet.ac.in).");
+                    return;
+                }
+                showToast("Password reset link sent to your email.");
+            });
+        })();
+    </script>
+</body></html>

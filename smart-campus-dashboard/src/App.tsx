@@ -43,7 +43,7 @@ function DashboardPage() {
         <DepartmentStats data={departmentData} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-5 mb-6">
         <ClassesTimeline data={todayClasses} />
         <FacultyPerformance data={facultyPerformance} />
       </div>

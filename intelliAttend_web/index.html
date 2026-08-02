@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>IntelliAttend - SmartBoard Link</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#1a211f",
+                        "primary-fixed": "#71f8e4",
+                        "on-tertiary-fixed": "#131b2e",
+                        "surface-container-lowest": "#090f0e",
+                        "on-primary-fixed-variant": "#005048",
+                        "tertiary": "#bec6e0",
+                        "surface-bright": "#343b39",
+                        "error-container": "#93000a",
+                        "on-secondary-container": "#003111",
+                        "inverse-on-surface": "#2b3230",
+                        "surface-variant": "#2f3634",
+                        "on-tertiary-fixed-variant": "#3f465c",
+                        "secondary-container": "#1ca64d",
+                        "on-tertiary-container": "#323a4f",
+                        "surface-container-highest": "#2f3634",
+                        "on-surface-variant": "#bbcac6",
+                        "on-secondary-fixed-variant": "#005320",
+                        "secondary-fixed-dim": "#62df7d",
+                        "primary-container": "#14b8a6",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#dae2fd",
+                        "primary": "#4fdbc8",
+                        "on-primary": "#003731",
+                        "error": "#ffb4ab",
+                        "surface-tint": "#4fdbc8",
+                        "surface-container-high": "#252b2a",
+                        "secondary": "#62df7d",
+                        "on-tertiary": "#283044",
+                        "on-secondary": "#003914",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#bec6e0",
+                        "primary-fixed-dim": "#4fdbc8",
+                        "on-surface": "#dde4e1",
+                        "inverse-surface": "#dde4e1",
+                        "secondary-fixed": "#7ffc97",
+                        "inverse-primary": "#006b5f",
+                        "surface-dim": "#0e1513",
+                        "on-primary-fixed": "#00201c",
+                        "background": "#000000",
+                        "outline-variant": "#3c4947",
+                        "outline": "#859490",
+                        "on-primary-container": "#00423b",
+                        "on-background": "#dde4e1",
+                        "tertiary-container": "#9ca4bd",
+                        "surface-container-low": "#161d1b",
+                        "surface": "#121212",
+                        "on-secondary-fixed": "#002109"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "display": ["Inter", "sans-serif"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-lg": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .circle-progress {
+            transition: stroke-dashoffset 1s linear, stroke 1s linear;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800&amp;display=swap" rel="stylesheet"><style>
+        .digit-container {
+            height: 1em;
+            line-height: 1em;
+            overflow: hidden;
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .digit-strip {
+            display: flex;
+            flex-direction: column;
+            transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .roll-down {
+            animation: rollDown 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        .roll-up {
+            animation: rollUp 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        @keyframes rollDown {
+            from { transform: translateY(-90%); }
+            to { transform: translateY(0); }
+        }
+        @keyframes rollUp {
+            from { transform: translateY(0); }
+            to { transform: translateY(-90%); }
+        }
+        .status-toast {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            transform: translate(-50%, 16px);
+            pointer-events: none;
+        }
+        .status-toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+    </style></head>
+<body class="bg-black font-display text-on-surface antialiased selection:bg-primary selection:text-on-primary">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header -->
+<div class="flex items-center justify-between p-4 pb-2 z-10">
+<button class="text-white flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined" style="font-size: 24px;">close</span>
+</button>
+<h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">
+                Link to SmartBoard
+            </h2>
+</div>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col items-center justify-center p-6 gap-8 w-full max-w-md mx-auto">
+<!-- OTP Display Card -->
+<div class="w-full flex flex-col items-center justify-center gap-2">
+<div class="relative w-full overflow-hidden rounded-xl bg-surface-variant/40 shadow-2xl p-8 py-12 flex flex-col items-center justify-center gap-4 group">
+<!-- Subtle background decoration -->
+<div class="absolute -right-12 -top-12 size-40 rounded-full bg-primary/5 blur-3xl"></div>
+<div class="absolute -left-12 -bottom-12 size-40 rounded-full bg-secondary/5 blur-3xl"></div>
+<span class="text-primary text-xs font-bold tracking-[0.2em] uppercase z-10">One-Time Password</span>
+<!-- The Code -->
+<div class="z-10 flex gap-3 items-center">
+<div data-otp-slot class="digit-container text-6xl sm:text-7xl font-black text-white tracking-widest"></div>
+<div data-otp-slot class="digit-container text-6xl sm:text-7xl font-black text-white tracking-widest"></div>
+<div data-otp-slot class="digit-container text-6xl sm:text-7xl font-black text-white tracking-widest"></div>
+<div data-otp-slot class="digit-container text-6xl sm:text-7xl font-black text-white tracking-widest"></div>
+</div>
+<div class="z-10 mt-2 flex items-center gap-1.5 opacity-80">
+<span class="material-symbols-outlined text-[16px] text-primary">lock</span>
+<span class="text-on-surface-variant text-xs font-medium">IntelliAttend Smart Board&nbsp;</span>
+</div>
+</div>
+</div>
+<!-- Countdown Timer Ring -->
+<div class="flex flex-col items-center justify-center gap-4">
+<div class="relative flex size-32 items-center justify-center">
+<!-- SVG Ring -->
+<svg class="size-full -rotate-90 transform" viewBox="0 0 100 100">
+<!-- Track -->
+<circle class="text-surface-container-highest/50" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-width="6"></circle>
+<!-- Progress Indicator -->
+<circle id="progressRing" class="circle-progress" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-dasharray="283" stroke-dashoffset="0" stroke-linecap="round" stroke-width="6" style="color: #84CC16;"></circle>
+</svg>
+<!-- Timer Text -->
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span id="timerText" class="text-2xl font-bold tabular-nums tracking-tight" style="color: #84CC16;">30s</span>
+<span class="text-[10px] font-medium text-on-surface-variant uppercase">Remaining</span>
+</div>
+</div>
+</div>
+<!-- Instructions -->
+<div class="max-w-[280px] text-center">
+<p class="text-on-surface-variant text-base font-normal leading-relaxed">
+                    Point your screen at the SmartBoard or enter this code manually.
+                </p>
+</div>
+</main>
+<!-- Footer Actions -->
+<div class="w-full p-4 pb-8 max-w-md mx-auto">
+<button id="rotateBtn" class="group relative flex w-full items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-surface-container-highest transition-all duration-300 active:scale-[0.98]">
+<div class="flex items-center gap-2">
+<span id="rotateIcon" class="material-symbols-outlined text-[20px] text-white transition-transform duration-500">sync</span>
+<span id="rotateLabel" class="text-white text-base font-bold leading-normal tracking-[0.015em] truncate">Rotate Code</span>
+</div>
+</button>
+<p id="footerHint" class="text-center mt-4 text-xs text-outline">
+                Code refreshes automatically in 30s
+            </p>
+</div>
+</div>
+<!-- Status Toast -->
+<div id="statusToast" class="status-toast fixed bottom-24 left-1/2 z-50 rounded-lg bg-error-container px-4 py-2.5 text-sm font-medium text-on-error-container shadow-xl"></div>
+<script>
+        (function () {
+            "use strict";
+
+            var SLOTS = document.querySelectorAll("[data-otp-slot]");
+            var timerText = document.getElementById("timerText");
+            var ring = document.getElementById("progressRing");
+            var rotateBtn = document.getElementById("rotateBtn");
+            var rotateIcon = document.getElementById("rotateIcon");
+            var rotateLabel = document.getElementById("rotateLabel");
+            var footerHint = document.getElementById("footerHint");
+            var toast = document.getElementById("statusToast");
+
+            var TOTAL = 30;
+            var RING_CIRCUMFERENCE = 2 * Math.PI * 45;
+            var COLOR_ACTIVE = "#84CC16";
+            var COLOR_URGENT = "#ef4444";
+            var DIRECTIONS = ["down", "up", "down", "up"];
+
+            var secondsLeft = TOTAL;
+            var timerId = null;
+            var toastTimer = null;
+            var isRotating = false;
+
+            function randomOtp() {
+                var s = "";
+                for (var i = 0; i < 4; i++) {
+                    s += Math.floor(Math.random() * 10);
+                }
+                return s;
+            }
+
+            function buildStrip(el, target, direction) {
+                el.classList.remove("digit-strip", "roll-down", "roll-up");
+                var items = [];
+                for (var i = 0; i < 10; i++) {
+                    var v = direction === "down"
+                        ? (target + i) % 10
+                        : (target + i + 1) % 10;
+                    items.push("<span>" + v + "</span>");
+                }
+                el.innerHTML = items.join("");
+                void el.offsetHeight;
+                el.classList.add("digit-strip");
+                el.classList.add(direction === "down" ? "roll-down" : "roll-up");
+            }
+
+            function showExpiredDigits() {
+                SLOTS.forEach(function (slot) {
+                    slot.classList.remove("digit-strip", "roll-down", "roll-up");
+                    slot.innerHTML = "<span style=\"font-family:'JetBrains Mono',monospace\">!</span>";
+                });
+            }
+
+            function renderOtp(otp) {
+                SLOTS.forEach(function (slot, i) {
+                    buildStrip(slot, parseInt(otp.charAt(i), 10), DIRECTIONS[i]);
+                });
+            }
+
+            function renderTimer() {
+                timerText.textContent = secondsLeft + "s";
+                var ratio = secondsLeft / TOTAL;
+                ring.style.strokeDashoffset = String(RING_CIRCUMFERENCE * (1 - ratio));
+                var color = secondsLeft <= 10 ? COLOR_URGENT : COLOR_ACTIVE;
+                ring.style.color = color;
+                timerText.style.color = color;
+                footerHint.textContent = secondsLeft > 0
+                    ? "Code refreshes automatically in " + secondsLeft + "s"
+                    : "Code expired \u2014 tap Rotate Code";
+            }
+
+            function showToast(message) {
+                toast.textContent = message;
+                toast.classList.add("show");
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(function () {
+                    toast.classList.remove("show");
+                }, 2600);
+            }
+
+            function startCountdown() {
+                clearInterval(timerId);
+                timerId = setInterval(function () {
+                    secondsLeft--;
+                    if (secondsLeft <= 0) {
+                        secondsLeft = 0;
+                        clearInterval(timerId);
+                        timerId = null;
+                        renderTimer();
+                        showExpiredDigits();
+                        showToast("OTP expired. Tap Rotate to get a new code.");
+                        return;
+                    }
+                    renderTimer();
+                }, 1000);
+            }
+
+            function rotateCode() {
+                if (isRotating) return;
+                isRotating = true;
+                rotateBtn.classList.add("opacity-70", "pointer-events-none");
+                rotateIcon.classList.add("rotate-180");
+
+                setTimeout(function () {
+                    renderOtp(randomOtp());
+                    secondsLeft = TOTAL;
+                    startCountdown();
+                    renderTimer();
+                    rotateIcon.classList.remove("rotate-180");
+                    rotateBtn.classList.remove("opacity-70", "pointer-events-none");
+                    isRotating = false;
+                    showToast("Attendance code refreshed");
+                }, 350);
+            }
+
+            rotateBtn.addEventListener("click", rotateCode);
+
+            renderOtp(randomOtp());
+            startCountdown();
+        })();
+    </script>
+</body></html>

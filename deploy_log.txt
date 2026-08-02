@@ -1,0 +1,112 @@
+﻿[11:37:04] ==========================================
+[11:37:04] INTELLIATTEND SMARTBOARD - DEPLOYMENT & COMPATIBILITY TEST
+[11:37:04] ==========================================
+[11:37:04] 
+[11:37:04] --- PHASE 1: SYSTEM COMPATIBILITY ---
+[11:37:04] OS: Microsoft Windows 10 IoT Enterprise LTSC 10.0.19044 Build 19044
+[11:37:04] Architecture: 64-bit
+[11:37:04] Install Date: 05/14/2023 12:59:09
+[11:37:05] CPU: 11th Gen Intel(R) Core(TM) i5-11320H @ 3.20GHz
+[11:37:05] Cores: 4 Physical, 8 Logical
+[11:37:05] Max Clock Speed: 3187 MHz
+[11:37:05] Total RAM: 7.68 GB
+[11:37:05] GPU: Sharing Monitor
+[11:37:05] GPU Driver Version: 11.28.49.440
+[11:37:05] GPU VRAM: 0 MB
+[11:37:05] Disk C: - Free: 69.81 GB / Total: 150 GB
+[11:37:05] Disk D: - Free: 62.37 GB / Total: 67.72 GB
+[11:37:05] Disk E: - Free: 11.66 GB / Total: 19.99 GB
+[11:37:05] Display: Default Monitor - ScreenWidth:  x 
+[11:37:05] 
+[11:37:05] --- .NET Runtime Check ---
+[11:37:05]   .NET runtime NOT found at default location
+[11:37:05] 
+[11:37:05] --- PHASE 2: DOWNLOADING MSI ---
+[11:37:08] Download COMPLETE: intelliattend_smartboard.msi - 18.79 MB
+[11:37:08] Downloaded at: 07/21/2026 11:37:08
+[11:37:08] 
+[11:37:08] --- PHASE 3: UNINSTALL EXISTING ---
+[11:37:08] Found existing: intelliattend_smartboard - MsiExec.exe /X{2744EFD9-B125-4963-A20E-4C4A6B40ADC8}
+[11:37:09] Uninstall exit code: 1619
+[11:37:14] Any running instances killed
+[11:37:14] 
+[11:37:14] --- PHASE 4: INSTALLING MSI ---
+[11:37:14] Admin install failed, trying without elevation...
+[11:37:15] MSI Install exit code (no elevation): 0
+[11:37:19] Install SUCCESS: exe found at C:\Users\MAXHUB\AppData\Local\intelliattend_smartboard
+[11:37:19] Exe size: 170 KB
+[11:37:19] Exe date: 07/18/2026 17:08:10
+[11:37:19] 
+[11:37:19] Installed files:
+[11:37:19]   data - 0 KB - 07/21/2026 11:11:36
+[11:37:19]   audioplayers_windows_plugin.dll - 196.5 KB - 07/18/2026 17:07:10
+[11:37:19]   connectivity_plus_plugin.dll - 96.5 KB - 07/18/2026 17:07:16
+[11:37:19]   flutter_local_notifications_windows.dll - 86 KB - 07/18/2026 17:07:26
+[11:37:19]   flutter_secure_storage_windows_plugin.dll - 154.5 KB - 07/18/2026 17:07:32
+[11:37:19]   flutter_windows.dll - 20786 KB - 07/09/2026 11:16:18
+[11:37:19]   intelliattend_smartboard.exe - 170 KB - 07/18/2026 17:08:10
+[11:37:19]   isar.dll - 1144 KB - 07/11/2026 17:09:40
+[11:37:19]   isar_flutter_libs_plugin.dll - 85 KB - 07/18/2026 17:07:42
+[11:37:19]   pdfium.dll - 7008.5 KB - 07/18/2026 17:04:54
+[11:37:19]   screen_retriever_windows_plugin.dll - 117.5 KB - 07/18/2026 17:07:48
+[11:37:19]   url_launcher_windows_plugin.dll - 95 KB - 07/18/2026 17:07:56
+[11:37:19]   window_manager_plugin.dll - 128 KB - 07/18/2026 17:08:04
+[11:37:19]   data\flutter_assets - 1 bytes
+[11:37:19]   data\app.so - 9192336 bytes
+[11:37:19]   data\icudtl.dat - 862304 bytes
+[11:37:19]   data\flutter_assets\assets - 1 bytes
+[11:37:19]   data\flutter_assets\fonts - 1 bytes
+[11:37:19]   data\flutter_assets\shaders - 1 bytes
+[11:37:19]   data\flutter_assets\.env - 356 bytes
+[11:37:19]   data\flutter_assets\AssetManifest.bin - 253 bytes
+[11:37:19]   data\flutter_assets\FontManifest.json - 82 bytes
+[11:37:19]   data\flutter_assets\NativeAssetsManifest.json - 118 bytes
+[11:37:19]   data\flutter_assets\NOTICES.Z - 123701 bytes
+[11:37:19]   data\flutter_assets\assets\background.png - 1017472 bytes
+[11:37:19]   data\flutter_assets\assets\Errorfailure.lottie - 9111 bytes
+[11:37:19]   data\flutter_assets\assets\logo.png - 94737 bytes
+[11:37:19]   data\flutter_assets\assets\logo_square.png - 175905 bytes
+[11:37:19]   data\flutter_assets\fonts\MaterialIcons-Regular.otf - 1645184 bytes
+[11:37:19]   data\flutter_assets\shaders\ink_sparkle.frag - 21856 bytes
+[11:37:19]   data\flutter_assets\shaders\stretch_effect.frag - 17624 bytes
+[11:37:19] 
+[11:37:19] --- PHASE 5: CONFIGURING .ENV ---
+[11:37:19] .env written to: C:\Users\MAXHUB\AppData\Local\intelliattend_smartboard\data\flutter_assets\.env
+[11:37:19] .env contents:
+[11:37:19]   API_BASE_URL=https://api.intelliattend.app
+[11:37:19]   LOCAL_API_URL=http://127.0.0.1:8000/v1/board/telemetry
+[11:37:19]   FIREBASE_API_KEY=AIzaSyBooFadQf3TZFvZOUJkihMUdgexrbeoQnE
+[11:37:19]   FIREBASE_PROJECT_ID=intelliattend-a2564
+[11:37:19]   FIREBASE_APP_ID=1:738499328288:web:c345f44de9d8393062ff45
+[11:37:19]   FIREBASE_MESSAGING_SENDER_ID=738499328288
+[11:37:19]   SSL_PIN_FINGERPRINT=
+[11:37:19]   ENABLE_DOCUMENTS=true
+[11:37:19]   DEBUG=true
+[11:37:19] 
+[11:37:19] --- PHASE 6: LAUNCHING APP ---
+[11:37:19] App LAUNCHED successfully
+[11:37:19] 
+[11:37:19] --- PHASE 7: VERIFICATION (waiting 15s for app startup) ---
+[11:37:34] App NOT RUNNING - Process may have crashed
+[11:37:34] 
+[11:37:34] --- App Data (Roaming) ---
+[11:37:34] 
+[11:37:34] --- NETWORK CONNECTIONS ---
+[11:37:34] 
+[11:37:34] --- API CONNECTIVITY TEST ---
+[11:37:34] API test failed: The remote server returned an error: (405) Method Not Allowed.
+[11:37:34] 
+[11:37:34] --- RECENT APPLICATION EVENT LOG ---
+[11:37:34]   [Information] 07/21/2026 11:37:15 - Ending session 0 started ?2026?-?07?-?21T06:07:15.008016000Z.
+[11:37:34]   [Information] 07/21/2026 11:37:15 - Starting session 0 - ?2026?-?07?-?21T06:07:15.008016000Z.
+[11:37:34]   [Information] 07/21/2026 11:37:15 - Ending a Windows Installer transaction: C:\Users\MAXHUB\Downloads\intelliattend_smartboard.msi. Client Process Id: 3016.
+[11:37:34]   [Information] 07/21/2026 11:37:15 - Windows Installer reconfigured the product. Product Name: intelliattend_smartboard. Product Version: 5.5.0.11. Product Language: 1033. Manufacturer: IntelliAttend. Reconfiguration success or error sta
+[11:37:34]   [Information] 07/21/2026 11:37:15 - Product: intelliattend_smartboard -- Configuration completed successfully.
+[11:37:34]   [Information] 07/21/2026 11:37:14 - Beginning a Windows Installer transaction: C:\Users\MAXHUB\Downloads\intelliattend_smartboard.msi. Client Process Id: 3016.
+[11:37:34]   [Information] 07/21/2026 11:37:08 - Ending a Windows Installer transaction: C:\Users\MAXHUB\MsiExec.exe /X{2744EFD9-B125-4963-A20E-4C4A6B40ADC8}. Client Process Id: 6404.
+[11:37:34]   [Information] 07/21/2026 11:37:08 - Beginning a Windows Installer transaction: C:\Users\MAXHUB\MsiExec.exe /X{2744EFD9-B125-4963-A20E-4C4A6B40ADC8}. Client Process Id: 6404.
+[11:37:34] 
+[11:37:34] ==========================================
+[11:37:34] DEPLOYMENT & TEST COMPLETE
+[11:37:34] ==========================================
+
