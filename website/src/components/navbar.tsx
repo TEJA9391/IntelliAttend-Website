@@ -1,149 +1,214 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { Sparkles, Menu, X, ChevronDown } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
-import { usePathname } from "next/navigation"
-
-const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Features", href: "/features" },
-  { name: "Solutions", href: "/solutions" },
-  { name: "Faculty", href: "/faculty" },
-  { name: "Students", href: "/students" },
-  { name: "Analytics", href: "/analytics" },
+const navLinks = [
+  { 
+    name: "Products", 
+    href: "/products", 
+    megaTitle: "Explore our next generation platform",
+    dropdown: [
+      { name: "SmartBoard", href: "/products/smartboard", desc: "Interactive classroom displays" },
+      { name: "Faculty", href: "/products/faculty", desc: "Manage classes and attendance" },
+      { name: "Student", href: "/products/student", desc: "Track progress and schedules" },
+    ]
+  },
+  { 
+    name: "Solutions", 
+    href: "/solutions",
+    megaTitle: "Solutions tailored to your campus",
+    dropdown: [
+      { name: "Universities", href: "/solutions/universities", desc: "Scale campus management" },
+      { name: "K-12 Schools", href: "/solutions/k12", desc: "Streamline daily operations" },
+    ]
+  },
   { name: "Pricing", href: "/pricing" },
-  { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
-]
+  { name: "Blog", href: "/blog" },
+  { 
+    name: "Resources", 
+    href: "#",
+    megaTitle: "Learn how to use IntelliAttend",
+    dropdown: [
+      { name: "Documentation", href: "/docs", desc: "Platform guides and API" },
+      { name: "Help Center", href: "/support", desc: "24/7 customer support" },
+    ]
+  },
+];
 
-export function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false)
-  const pathname = usePathname()
+function MagneticButton({ children, className, variant = "primary" }: { children: React.ReactNode, className?: string, variant?: "primary" | "ghost" }) {
+  const ref = useRef<HTMLButtonElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  
+  const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
+  const xSpring = useSpring(x, springConfig);
+  const ySpring = useSpring(y, springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!ref.current) return;
+    const { clientX, clientY } = e;
+    const { left, top, width, height } = ref.current.getBoundingClientRect();
+    
+    const xPos = (clientX - (left + width / 2)) * 0.2;
+    const yPos = (clientY - (top + height / 2)) * 0.2;
+    
+    x.set(xPos);
+    y.set(yPos);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-        <div className="flex lg:flex-1">
-          <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
-            <span className="sr-only">IntelliAttend</span>
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-5 w-5"
-              >
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-              </svg>
-            </div>
-            <span className="text-xl font-bold tracking-tight text-slate-900">IntelliAttend</span>
-          </Link>
-        </div>
-        <div className="flex lg:hidden">
-          <button
-            type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-slate-700"
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            <span className="sr-only">Open main menu</span>
-            <Menu className="h-6 w-6" aria-hidden="true" />
-          </button>
-        </div>
-        <div className="hidden lg:flex lg:gap-x-8">
-          {navigation.map((item) => {
-            const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/')
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={cn(
-                  "text-sm font-medium leading-6 transition-colors hover:text-primary",
-                  isActive ? "text-primary" : "text-slate-600"
-                )}
-              >
-                {item.name}
-              </Link>
-            )
-          })}
-        </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-4">
-          <Button variant="ghost" className="text-slate-600 hover:text-primary">
-            Login
-          </Button>
-          <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
-            Get Started
-          </Button>
-        </div>
-      </nav>
-      {/* Mobile menu */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden">
-          <div className="fixed inset-0 z-50" />
-          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-slate-900/10">
-            <div className="flex items-center justify-between">
-              <Link href="/" className="-m-1.5 p-1.5 flex items-center gap-2">
-                <span className="sr-only">IntelliAttend</span>
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-5 w-5"
-                  >
-                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                  </svg>
-                </div>
-                <span className="text-xl font-bold tracking-tight">IntelliAttend</span>
-              </Link>
-              <button
-                type="button"
-                className="-m-2.5 rounded-md p-2.5 text-slate-700"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span className="sr-only">Close menu</span>
-                <X className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </div>
-            <div className="mt-6 flow-root">
-              <div className="-my-6 divide-y divide-slate-500/10">
-                <div className="space-y-2 py-6">
-                  {navigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-slate-900 hover:bg-slate-50"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-                <div className="py-6 flex flex-col gap-4">
-                  <Button variant="outline" className="w-full justify-center">
-                    Login
-                  </Button>
-                  <Button className="w-full justify-center bg-primary hover:bg-primary/90">
-                    Get Started
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <motion.button
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ x: xSpring, y: ySpring }}
+      className={cn(
+        "relative px-6 py-2.5 rounded-full font-medium text-sm transition-colors overflow-hidden group",
+        variant === "primary" 
+          ? "bg-[#0F172A] text-white hover:bg-[#1E293B]" 
+          : "text-[#64748B] hover:text-[#0F172A]",
+        className
       )}
-    </header>
-  )
+    >
+      <span className="relative z-10">{children}</span>
+      {variant === "primary" && (
+        <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+      )}
+    </motion.button>
+  );
+}
+
+export function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const { scrollY } = useScroll();
+  const headerHeight = useTransform(scrollY, [0, 100], [100, 80]);
+
+  useEffect(() => {
+    return scrollY.onChange((latest) => {
+      setIsScrolled(latest > 20);
+    });
+  }, [scrollY]);
+
+  return (
+    <motion.header
+      style={{ height: headerHeight }}
+      className={cn(
+        "fixed top-0 inset-x-0 z-50 flex items-center transition-all duration-300",
+        isScrolled ? "bg-white/70 backdrop-blur-[18px] border-b border-[#0F172A]/[0.08]" : "bg-transparent"
+      )}
+    >
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 w-full flex items-center justify-between">
+        
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 group">
+          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform">
+             <Sparkles className="text-white w-5 h-5" />
+          </div>
+          <span className="font-bold text-xl text-[#0F172A] tracking-tight">IntelliAttend</span>
+        </Link>
+
+        {/* Desktop Links */}
+        <nav 
+          className="hidden md:flex items-center gap-2"
+          onMouseLeave={() => setActiveMenu(null)}
+        >
+          {navLinks.map((link) => (
+            <div 
+              key={link.name} 
+              className="group/nav"
+              onMouseEnter={() => setActiveMenu(link.name)}
+            >
+              <Link 
+                href={link.href}
+                className="flex items-center gap-1.5 text-sm font-medium text-[#64748B] hover:text-[#0F172A] hover:bg-slate-100 transition-colors px-4 py-2 rounded-full"
+              >
+                {link.name}
+                {link.dropdown && <ChevronDown className="w-4 h-4 transition-transform group-hover/nav:rotate-180 opacity-50" />}
+              </Link>
+              
+              {link.dropdown && (
+                <AnimatePresence>
+                  {activeMenu === link.name && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: -10, height: 0 }}
+                      animate={{ opacity: 1, y: 0, height: "auto" }}
+                      exit={{ opacity: 0, y: -10, height: 0 }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      className="absolute top-full left-0 right-0 w-full z-50 overflow-hidden bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] border-t border-slate-100"
+                    >
+                      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-6 flex gap-12">
+                        {/* Left Column */}
+                        <div className="flex-1 border-r border-slate-100 pr-12 flex flex-col justify-between max-w-md">
+                          <motion.h3 
+                            initial={{ opacity: 0, x: -10 }} 
+                            animate={{ opacity: 1, x: 0 }} 
+                            transition={{ delay: 0.1 }}
+                            className="text-2xl tracking-tight font-bold text-[#0F172A] leading-[1.2]"
+                          >
+                            {link.megaTitle}
+                          </motion.h3>
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }} 
+                            animate={{ opacity: 1, y: 0 }} 
+                            transition={{ delay: 0.2 }}
+                          >
+                            <Link href={link.href} className="mt-4 inline-flex items-center justify-center px-5 py-2 bg-slate-50 hover:bg-slate-100 text-sm font-semibold text-slate-700 rounded-full transition-colors self-start">
+                              See overview
+                            </Link>
+                          </motion.div>
+                        </div>
+
+                        {/* Right Column (Grid of Links) */}
+                        <div className="flex-1 grid grid-cols-1 gap-x-8 gap-y-1">
+                          <div className="text-xs font-semibold text-slate-400 mb-1 px-3 uppercase tracking-wider">{link.name}</div>
+                          {link.dropdown.map((item, index) => (
+                            <Link key={item.name} href={item.href} className="p-3 rounded-2xl hover:bg-slate-50 transition-colors group/item block">
+                              <motion.div
+                                initial={{ opacity: 0, x: -10 }} 
+                                animate={{ opacity: 1, x: 0 }} 
+                                transition={{ delay: 0.1 + index * 0.05 }}
+                              >
+                                <div className="text-sm font-semibold text-slate-900 group-hover/item:text-primary transition-colors">{item.name}</div>
+                                <div className="text-[13px] text-slate-500 mt-0.5">{item.desc}</div>
+                              </motion.div>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              )}
+            </div>
+          ))}
+        </nav>
+
+        {/* Desktop CTA */}
+        <div className="hidden md:flex items-center gap-2">
+          <MagneticButton variant="ghost">Login</MagneticButton>
+          <MagneticButton variant="primary">Get Started</MagneticButton>
+        </div>
+
+        {/* Mobile Toggle */}
+        <button 
+          className="md:hidden p-2 text-[#0F172A]"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X /> : <Menu />}
+        </button>
+
+      </div>
+    </motion.header>
+  );
 }

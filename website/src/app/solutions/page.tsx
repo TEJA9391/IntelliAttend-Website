@@ -1,25 +1,31 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
+import { Navbar } from "@/components/navbar";
 
-export default function SolutionsPage() {
+export default function SolutionsOverview() {
   return (
-    <div className="pt-32 pb-24 min-h-screen bg-white dark:bg-slate-900">
-      <div className="container mx-auto px-6 lg:px-8">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center max-w-3xl mx-auto mb-20"
-        >
-          <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6">
-            Solutions for <span className="text-secondary">Every Campus</span>
-          </h1>
-          <p className="text-lg text-slate-600 dark:text-slate-400">
-            Whether you're a small college or a massive university network, IntelliAttend scales to meet your needs.
-          </p>
-        </motion.div>
+    <div className="min-h-screen bg-[#F8FAFC]">
+      <Navbar />
+      <div className="pt-40 pb-20 flex items-center justify-center">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="inline-flex items-center rounded-full px-3 py-1 text-sm font-semibold text-primary bg-primary/10 mb-6">
+              Solutions Overview
+            </div>
+            <h1 className="text-5xl font-bold tracking-tight text-[#0F172A] sm:text-7xl mb-8">
+              Tailored for Your Campus
+            </h1>
+            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-[#64748B]">
+              Discover how IntelliAttend scales and adapts to the unique operational needs of universities, colleges, and K-12 schools.
+            </p>
+          </motion.div>
+        </div>
       </div>
     </div>
-  )
+  );
 }
