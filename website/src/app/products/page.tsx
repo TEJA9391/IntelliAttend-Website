@@ -16,6 +16,7 @@ import {
   Database
 } from "lucide-react";
 import { Navbar } from "@/components/navbar";
+import { ProductsShowcase } from "@/components/products/ProductsShowcase";
 
 // Counter Component
 function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "" }: { from: number, to: number, duration?: number, suffix?: string, prefix?: string }) {
@@ -98,6 +99,9 @@ export default function ProductsOverview() {
           </div>
         </div>
       </section>
+
+      {/* Products Showcase generated from User Prompt */}
+      <ProductsShowcase />
 
       {/* Statistics Section */}
       <section className="py-12 border-y border-slate-200/60 bg-white">

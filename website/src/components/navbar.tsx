@@ -2,9 +2,12 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Sparkles, Menu, X, ChevronDown } from "lucide-react";
+import Image from "next/image";
+import { MegaMenuProducts3D } from "./navbar/MegaMenuProducts3D";
 
 const navLinks = [
   { 
@@ -20,6 +23,7 @@ const navLinks = [
   { 
     name: "Solutions", 
     href: "/solutions",
+    overviewHref: "/products",
     megaTitle: "Solutions tailored to your campus",
     dropdown: [
       { name: "Universities", href: "/solutions/universities", desc: "Scale campus management" },
@@ -108,25 +112,25 @@ export function Navbar() {
         isScrolled ? "bg-white/70 backdrop-blur-[18px] border-b border-[#0F172A]/[0.08]" : "bg-transparent"
       )}
     >
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 w-full flex items-center justify-between">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 w-full h-full flex items-center justify-between">
         
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform">
-             <Sparkles className="text-white w-5 h-5" />
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+            <Sparkles className="text-white w-4 h-4" />
           </div>
           <span className="font-bold text-xl text-[#0F172A] tracking-tight">IntelliAttend</span>
         </Link>
 
         {/* Desktop Links */}
         <nav 
-          className="hidden md:flex items-center gap-2"
+          className="hidden md:flex h-full items-center gap-2"
           onMouseLeave={() => setActiveMenu(null)}
         >
           {navLinks.map((link) => (
             <div 
               key={link.name} 
-              className="group/nav"
+              className="group/nav flex items-center h-full"
               onMouseEnter={() => setActiveMenu(link.name)}
             >
               <Link 
@@ -139,12 +143,15 @@ export function Navbar() {
               
               {link.dropdown && (
                 <AnimatePresence>
-                  {activeMenu === link.name && (
+                  {activeMenu === link.name && link.name === "Products" ? (
+                    <MegaMenuProducts3D key="mega-3d" />
+                  ) : activeMenu === link.name ? (
                     <motion.div 
-                      initial={{ opacity: 0, y: -10, height: 0 }}
-                      animate={{ opacity: 1, y: 0, height: "auto" }}
-                      exit={{ opacity: 0, y: -10, height: 0 }}
-                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      key="mega-standard"
+                      initial={{ opacity: 0, y: -15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -15 }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
                       className="absolute top-full left-0 right-0 w-full z-50 overflow-hidden bg-white shadow-[0_20px_50px_rgba(0,0,0,0.1)] border-t border-slate-100"
                     >
                       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-6 flex gap-12">
@@ -163,7 +170,7 @@ export function Navbar() {
                             animate={{ opacity: 1, y: 0 }} 
                             transition={{ delay: 0.2 }}
                           >
-                            <Link href={link.href} className="mt-4 inline-flex items-center justify-center px-5 py-2 bg-slate-50 hover:bg-slate-100 text-sm font-semibold text-slate-700 rounded-full transition-colors self-start">
+                            <Link href={link.overviewHref || link.href} className="mt-4 inline-flex items-center justify-center px-5 py-2 bg-slate-50 hover:bg-slate-100 text-sm font-semibold text-slate-700 rounded-full transition-colors self-start">
                               See overview
                             </Link>
                           </motion.div>
@@ -187,7 +194,7 @@ export function Navbar() {
                         </div>
                       </div>
                     </motion.div>
-                  )}
+                  ) : null}
                 </AnimatePresence>
               )}
             </div>
