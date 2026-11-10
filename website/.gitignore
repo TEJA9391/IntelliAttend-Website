@@ -23,6 +23,20 @@
 # misc
 .DS_Store
 *.pem
+*.key
+*.py
+*.log
+*.csv
+*.iml
+.metadata
+
+# security & operational artifacts
+temp_ssh.py
+deploy_log.txt
+installed_apps.csv
+production_test_report.md
+ghlogin_*.log
+*.backup.*
 
 # debug
 npm-debug.log*

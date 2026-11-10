@@ -1,0 +1,31 @@
+title = "IntelliAttend-Web gitleaks configuration"
+
+# ── Firebase WEB API keys ──────────────────────────────────────────────────
+# A Firebase web API key (`AIza…`) is PUBLIC BY DESIGN: it is compiled into
+# every client bundle and shipped to every browser. It is not a secret — it is
+# an identifier, and access is controlled by Firebase Security Rules and the
+# authorized-domains allowlist, both enforced server-side.
+#
+# This allowlist matches ONLY the `AIza…` value pattern. A Firebase SERVICE
+# ACCOUNT key (a JSON blob with a `private_key` PEM block) is a real secret
+# and is still reported.
+[[allowlists]]
+description = "Firebase web API keys (AIza...) — public by design; service-account keys are still reported"
+regexes = ['''AIza[0-9A-Za-z_\-]{35}''']
+regexTarget = "secret"
+
+# Documentation-only JWT example payloads (base64 `eyJ…` strings) in the API
+# specification. They are examples, not tokens.
+[[allowlists]]
+description = "API specification examples — example JWT payloads"
+paths = ['''(^|/)specifications/.*''']
+
+# A Firebase web key that was committed in history and has since been rotated
+# (it differs from the key in use). The files no longer exist in the tree.
+[[allowlists]]
+description = "Historical rotated Firebase key in deleted files — remove after history purge"
+paths = [
+  '''(^|/)deploy_log\.txt$''',
+  '''(^|/)temp_ssh\.py$''',
+  '''(^|/)production_test_report\.md$''',
+]

@@ -1,0 +1,38 @@
+# IntelliAttend Web - CODEOWNERS
+# This file defines code ownership for automatic review assignment
+
+# Default owners for everything in the repo
+* @IntelliAttend/core-team
+
+# Website core
+/src/app/ @IntelliAttend/core-team
+/src/components/layout/ @IntelliAttend/core-team
+/src/components/ui/ @IntelliAttend/core-team
+/src/lib/ @IntelliAttend/core-team
+/src/types/ @IntelliAttend/core-team
+/src/config/ @IntelliAttend/core-team
+
+# Feature-specific owners
+/src/components/home/ @IntelliAttend/frontend-team
+/src/components/auth/ @IntelliAttend/auth-team
+/src/components/portal/ @IntelliAttend/dashboard-team
+/src/components/pricing/ @IntelliAttend/product-team
+/src/components/blog/ @IntelliAttend/content-team
+/src/components/products/ @IntelliAttend/product-team
+/src/components/solutions/ @IntelliAttend/product-team
+/src/components/support/ @IntelliAttend/support-team
+
+# CI/CD and infrastructure
+/.github/ @IntelliAttend/devops-team
+/wrangler.toml @IntelliAttend/devops-team
+/next.config.ts @IntelliAttend/core-team
+
+# Documentation
+/README.md @IntelliAttend/core-team
+/CONTRIBUTING.md @IntelliAttend/core-team
+/ARCHITECTURE.md @IntelliAttend/core-team
+/LICENSE @IntelliAttend/core-team
+
+# Dependencies
+/package.json @IntelliAttend/core-team
+/package-lock.json @IntelliAttend/core-team

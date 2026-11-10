@@ -1,0 +1,9 @@
+name = "intelliattend-web"
+compatibility_date = "2024-12-01"
+pages_build_output_dir = "out"
+
+# Custom domain configuration
+# After deploying, configure custom domain in Cloudflare Pages dashboard:
+# 1. Go to Workers & Pages > intelliattend-web > Custom domains
+# 2. Add custom domain: www.intelliattend.app
+# 3. Add redirect: intelliattend.app -> www.intelliattend.app

@@ -1,14 +1,30 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { LogIn, MousePointerClick, ScanLine, Presentation } from "lucide-react";
+import { CalendarCheck, ClipboardCheck, Presentation, CreditCard } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const steps = [
-  { icon: LogIn, title: "Login", desc: "Access your dashboard securely via single sign-on." },
-  { icon: MousePointerClick, title: "Select Class", desc: "Choose your ongoing or upcoming session from the timetable." },
-  { icon: ScanLine, title: "Take Attendance", desc: "Let the AI scan the classroom to instantly record student presence." },
-  { icon: Presentation, title: "Push to SmartBoard", desc: "Cast live attendance and course materials directly to the room's display." },
+  { 
+    icon: CalendarCheck, 
+    title: "Plan & Run Sessions", 
+    desc: "Schedule conflict-free timetables, launch class sessions, and manage daily lectures effortlessly." 
+  },
+  { 
+    icon: ClipboardCheck, 
+    title: "Instant Attendance & Records", 
+    desc: "Eliminate paper registers with fast digital roll-calls and maintain automated, tamper-proof academic archives." 
+  },
+  { 
+    icon: Presentation, 
+    title: "Connected Campus Displays", 
+    desc: "Cast lecture materials, live schedules, and campus announcements directly to room SmartBoards." 
+  },
+  { 
+    icon: CreditCard, 
+    title: "Smart Campus Payments", 
+    desc: "Simplify fee collections, track student dues, and generate instant digital receipts with complete audit trails." 
+  },
 ];
 
 export function HowItWorks() {
@@ -32,13 +48,13 @@ export function HowItWorks() {
             transition={{ delay: 0.1 }}
             className="text-lg text-[#64748B]"
           >
-            Four simple steps to transform your classroom experience.
+            Four simple steps to simplify your entire campus at your fingertips.
           </motion.p>
         </div>
 
         <div className="relative max-w-5xl mx-auto">
           {/* Connecting Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#0F172A]/[0.08] -translate-y-1/2 hidden md:block" />
+
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {steps.map((step, i) => (
@@ -47,15 +63,17 @@ export function HowItWorks() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: i * 0.2, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.25, delay: i * 0.2, ease: [0.16, 1, 0.3, 1] }}
                 className="relative z-10 flex flex-col items-center text-center"
               >
-                <div className="w-20 h-20 rounded-[24px] bg-white border border-[#0F172A]/[0.08] flex items-center justify-center shadow-lg shadow-[#0F172A]/[0.03] mb-6 group hover:scale-110 transition-transform duration-300">
-                  <step.icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-300" />
+                <div className="apple-card w-20 h-20 flex items-center justify-center mb-6 group">
+                  <step.icon className="w-8 h-8 text-primary group-hover:scale-110 transition-transform duration-150" />
                 </div>
                 
-                <h3 className="text-xl font-bold text-[#0F172A] mb-3">{step.title}</h3>
-                <p className="text-sm text-[#64748B] leading-relaxed max-w-[200px]">{step.desc}</p>
+                <h3 className="text-lg md:text-xl font-bold text-[#0F172A] mb-3 min-h-[56px] flex items-center justify-center">
+                  {step.title}
+                </h3>
+                <p className="text-sm text-[#64748B] leading-relaxed max-w-[220px]">{step.desc}</p>
               </motion.div>
             ))}
           </div>

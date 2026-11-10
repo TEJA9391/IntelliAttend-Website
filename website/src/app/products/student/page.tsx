@@ -9,18 +9,18 @@ import {
   BellRing,
   TrendingUp,
   ClipboardCheck,
-  MonitorPlay,
   CloudSync,
-  GraduationCap,
   Clock,
   LayoutList,
   MessageSquare,
   ShieldCheck,
   CheckCircle2,
   Zap,
-  Lock
+  Lock,
+  ChevronRight
 } from "lucide-react";
-import { Navbar } from "@/components/navbar";
+import Link from "next/link";
+import { Navbar } from "@/components/layout/Navbar";
 
 // Counter Component
 function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "" }: { from: number, to: number, duration?: number, suffix?: string, prefix?: string }) {
@@ -42,7 +42,7 @@ function AnimatedCounter({ from, to, duration = 2, suffix = "", prefix = "" }: {
     }
   }, [from, to, duration, suffix, prefix, isInView]);
 
-  return <span ref={nodeRef}>{prefix}{from}{suffix}</span>;
+  return <span ref={nodeRef}>{prefix}{to}{suffix}</span>;
 }
 
 export default function StudentPage() {
@@ -58,12 +58,8 @@ export default function StudentPage() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="inline-flex items-center rounded-full px-4 py-1.5 text-sm font-semibold text-primary bg-primary/10 mb-8 border border-primary/20">
-              <GraduationCap className="w-4 h-4 mr-2" />
-              Student Portal
-            </div>
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-text-main mb-8 leading-[1.1]">
               A Smarter Learning Experience<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">for Every Student.</span>
@@ -90,13 +86,13 @@ export default function StudentPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
+                transition={{ delay: i * 0.1, duration: 0.2 }}
                 className="text-center px-4"
               >
                 <div className="flex items-center justify-center text-4xl md:text-5xl font-bold text-text-main mb-2 font-mono tracking-tight h-[48px]">
                   {stat.text ? (
                     <div className="flex items-center gap-2">
-                      {stat.icon && <stat.icon className="w-8 h-8 text-primary" />}
+                      {stat.icon && <stat.icon className="w-8 h-8 text-slate-500" />}
                       <span className="text-3xl md:text-4xl">{stat.text}</span>
                     </div>
                   ) : (
@@ -124,13 +120,12 @@ export default function StudentPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { icon: Smartphone, title: "Digital Attendance", desc: "Mark attendance securely using QR-based verification with instant confirmation and real-time attendance tracking." },
+              { icon: Smartphone, title: "Digital Attendance", desc: "Mark attendance securely using digital verification with instant confirmation and real-time attendance tracking." },
               { icon: BookOpen, title: "Learning Resources", desc: "Access lecture notes, presentations, assignments, recorded sessions, and study materials shared by faculty anytime." },
               { icon: CalendarRange, title: "Personalized Timetable", desc: "View your daily class schedule, upcoming lectures, exam dates, and academic events in one organized calendar." },
               { icon: BellRing, title: "Smart Notifications", desc: "Receive instant alerts for class updates, assignment deadlines, attendance reminders, exam schedules, and campus announcements." },
               { icon: TrendingUp, title: "Academic Progress", desc: "Track attendance percentage, completed courses, assignment status, and learning progress through interactive dashboards." },
               { icon: ClipboardCheck, title: "Assignments & Submissions", desc: "View assignments, submit coursework before deadlines, and receive updates on submission status." },
-              { icon: MonitorPlay, title: "SmartBoard Access", desc: "Instantly access classroom presentations and materials shared on SmartBoards directly from your device." },
               { icon: CloudSync, title: "Cloud Learning", desc: "All academic resources are securely synchronized, allowing students to continue learning from anywhere, on any device." },
             ].map((feature, i) => (
               <motion.div
@@ -138,10 +133,10 @@ export default function StudentPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.05, duration: 0.5 }}
-                className="bg-slate-50 rounded-[28px] p-8 border border-slate-100 hover:shadow-xl hover:shadow-primary/10 transition-all duration-300 group"
+                transition={{ delay: i * 0.05, duration: 0.2 }}
+                className="apple-card p-8 group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-primary border border-slate-100">
+                <div className="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-slate-500 border border-slate-100">
                   <feature.icon className="w-6 h-6" />
                 </div>
                 <h3 className="text-xl font-bold text-text-main mb-3">{feature.title}</h3>
@@ -167,7 +162,7 @@ export default function StudentPage() {
               {[
                 { title: "Login Securely" },
                 { title: "View Today's Classes" },
-                { title: "Scan Attendance QR", highlight: true },
+                { title: "Log Attendance", highlight: true },
                 { title: "Access Lecture Resources" },
                 { title: "Receive Live Notifications" },
                 { title: "Complete Assignments", highlight: true },
@@ -178,10 +173,10 @@ export default function StudentPage() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
-                    transition={{ delay: i * 0.1, duration: 0.5 }}
+                    transition={{ delay: i * 0.1, duration: 0.2 }}
                     className={`w-full max-w-md p-5 rounded-2xl border backdrop-blur-md flex items-center justify-center relative z-10 ${
                       step.highlight 
-                        ? "bg-primary/20 border-primary/50 shadow-[0_0_30px_rgba(37,99,235,0.2)]" 
+                        ? "bg-primary/20 border-primary/50 shadow-[0_0_30px_rgba(45,212,191,0.2)]" 
                         : "bg-white/5 border-white/10"
                     }`}
                   >
@@ -231,11 +226,11 @@ export default function StudentPage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
+                transition={{ delay: i * 0.1, duration: 0.2 }}
                 className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex gap-6 items-start"
               >
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                  <benefit.icon className="w-6 h-6 text-primary" />
+                  <benefit.icon className="w-6 h-6 text-slate-500" />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-text-main mb-2">{benefit.title}</h3>
@@ -248,17 +243,24 @@ export default function StudentPage() {
       </section>
 
       {/* Callout Card */}
-      <section className="py-24 bg-white relative">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <section className="bg-primary relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-24">
+        {/* Top Wave */}
+        <div className="absolute top-0 left-0 right-0 w-full overflow-hidden leading-[0] z-0">
+          <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block w-full h-[60px] md:h-[120px]">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="fill-white"></path>
+          </svg>
+        </div>
+
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay z-0" />
+        
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-primary rounded-[40px] p-12 md:p-20 text-center relative overflow-hidden"
+            className="text-center"
           >
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
-            
-            <div className="relative z-10 max-w-4xl mx-auto">
+            <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
                 Everything Students Need to Succeed
               </h2>
@@ -267,12 +269,11 @@ export default function StudentPage() {
               </p>
               
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button className="px-8 py-4 bg-white text-primary rounded-full font-bold text-lg hover:scale-105 transition-transform shadow-xl">
-                  Explore Student Features
-                </button>
-                <button className="px-8 py-4 bg-accent/20 text-white border border-accent/30 rounded-full font-bold text-lg hover:bg-accent/30 transition-colors backdrop-blur-sm">
-                  Get Started
-                </button>
+                <Link href="/join">
+                  <button className="px-8 py-4 bg-accent/20 text-white border border-accent/30 rounded-full font-bold text-lg hover:bg-accent/30 hover:scale-105 active:scale-95 transition-all duration-150 backdrop-blur-sm cursor-pointer">
+                    Get Started
+                  </button>
+                </Link>
               </div>
             </div>
           </motion.div>

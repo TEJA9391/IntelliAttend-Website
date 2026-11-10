@@ -43,3 +43,12 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Security - Credentials & logs
+temp_ssh.py
+deploy_log.txt
+installed_apps.csv
+production_test_report.md
+*.log
+.env*
+

@@ -1,1 +1,13 @@
-export default function Page() { return (<div className="container mx-auto px-4 py-24"><h1 className="text-3xl font-bold">DOCS</h1></div>) }
+import { DocsHero } from "@/components/docs/DocsHero";
+import { DocsContent } from "@/components/docs/DocsContent";
+
+export default function DocsPage() {
+  return (
+    <div className="min-h-screen bg-white">
+      <DocsHero />
+      <div className="container mx-auto px-4 py-16">
+        <DocsContent />
+      </div>
+    </div>
+  );
+}
